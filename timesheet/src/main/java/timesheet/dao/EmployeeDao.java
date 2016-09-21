@@ -2,6 +2,9 @@ package timesheet.dao;
 
 import timesheet.domain.Employee;
 
+/**
+ * DAO of Employee.
+ */
 public interface EmployeeDao extends GenericDao<Employee, Long>{
 	/**
      * Tries to remove employee from the system.
