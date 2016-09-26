@@ -1,19 +1,24 @@
 package timesheet.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
- 
+
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
 import timesheet.dao.impl.InMemoryDaoImpl;
 import timesheet.domain.Employee;
 
 public class InMemoryDaoTest {
-	private GenericDao<Employee, Long> employeeDao = new InMemoryDaoImpl<Employee, Long>();
 	
+	private GenericDao<Employee, Long> employeeDao = new InMemoryDaoImpl<Employee, Long>();	
+
 	@Before
 	public void setup(){
+		
 		for (int i = 0; i < 5; i++) {
             Employee e = new Employee("Mike " + i, "IT");
             employeeDao.insert(e);
