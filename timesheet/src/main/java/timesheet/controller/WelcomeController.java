@@ -28,6 +28,6 @@ public class WelcomeController {
 	@PostConstruct
 	public void prepareFakeDomain() {
 		entityGenerator.deleteDomain();
-		entityGenerator.generateDomain();
+		//entityGenerator.generateDomain();
 	}
 }
