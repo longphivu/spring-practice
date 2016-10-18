@@ -11,7 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.jdbc.JdbcTestUtils;
 
-@ContextConfiguration(locations = {"/persistence-beans.xml"})
+@ContextConfiguration(locations = {"/persistence-beans.xml","/controllers.xml"})
 public class DomainAwareBase extends AbstractJUnit4SpringContextTests {
 	String basePath = new File("").getAbsolutePath();
 	String deleteScript = new File("src/main/resources/sql/cleanup.sql")
@@ -45,6 +45,10 @@ public class DomainAwareBase extends AbstractJUnit4SpringContextTests {
 	public void deleteAllDomainEntites() {
 		JdbcTestUtils.executeSqlScript(jdbcTemplate, new FileSystemResource(deleteScript), false);
 		//ScriptUtils.executeSqlScript(connection, new FileSystemResource(deleteScript));
+	}
+	
+	@Before
+	public void insertAllDomainEntities() {
 		JdbcTestUtils.executeSqlScript(jdbcTemplate, new FileSystemResource(insertScript), false);
 	}
 
