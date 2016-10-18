@@ -41,13 +41,11 @@ public class DomainAwareBase extends AbstractJUnit4SpringContextTests {
 //			server.stop();
 //	}
 	
-	@Before
 	public void deleteAllDomainEntites() {
 		JdbcTestUtils.executeSqlScript(jdbcTemplate, new FileSystemResource(deleteScript), false);
 		//ScriptUtils.executeSqlScript(connection, new FileSystemResource(deleteScript));
 	}
 	
-	@Before
 	public void insertAllDomainEntities() {
 		JdbcTestUtils.executeSqlScript(jdbcTemplate, new FileSystemResource(insertScript), false);
 	}

@@ -3,6 +3,7 @@ package timesheet.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,6 +24,12 @@ public class TimesheetServiceTest extends DomainAwareBase{
 	
 	@Autowired
 	ManagerDao	managerDao;
+	
+	@Before
+	public void initDomainEntities() {
+		deleteAllDomainEntites();
+		insertAllDomainEntities();
+	}
 	
 	@Test
     public void testBusiestTask() {

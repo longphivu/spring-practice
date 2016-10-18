@@ -8,7 +8,7 @@
 
 	<properties>
 		<spring.version>4.0.3.RELEASE</spring.version>
-		<hibernate.version>4.0.3.RELEASE</hibernate.version>
+		<hibernate.version>3.6.8.Final</hibernate.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
@@ -21,11 +21,11 @@
 			<version>4.10</version>
 		</dependency>
 		
-       <!--  <dependency>
+        <dependency>
 		    <groupId>org.mockito</groupId>
 		    <artifactId>mockito-all</artifactId>
 		    <version>1.9.0</version>
-		</dependency> -->
+		</dependency>
 		
         <!-- web -->
         <dependency>
@@ -62,7 +62,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>3.6.8.Final</version>
+			<version>${hibernate.version}</version>
 		</dependency>
 
 		<!-- spring framework -->

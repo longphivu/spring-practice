@@ -3,6 +3,8 @@ package timesheet.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,12 +20,22 @@ import org.springframework.web.servlet.ModelAndView;
 import timesheet.DomainAwareBase;
 import timesheet.controller.exception.EmployeeDeleteException;
 import timesheet.dao.EmployeeDao;
+import timesheet.dao.ManagerDao;
+import timesheet.dao.TaskDao;
 import timesheet.domain.Employee;
+import timesheet.domain.Manager;
+import timesheet.domain.Task;
 
 public class EmployeeControllerTest extends DomainAwareBase{
 
 	@Autowired
     private EmployeeDao employeeDao;
+	
+	@Autowired
+    private TaskDao taskDao;
+	
+	@Autowired
+    private ManagerDao managerDao;
  
     @Autowired
     private EmployeeController controller;
@@ -38,10 +50,7 @@ public class EmployeeControllerTest extends DomainAwareBase{
  
     @After
     public void cleanUp() {
-        List<Employee> employees = employeeDao.list();
-        for (Employee employee : employees) {
-            employeeDao.delete(employee);
-        }
+    	deleteAllDomainEntites();
     }
     
     @Test
@@ -74,8 +83,35 @@ public class EmployeeControllerTest extends DomainAwareBase{
         assertNull(employeeDao.find(id));
     }
     
-    /*@Test(expected = EmployeeDeleteException.class)
-    public void testDeleteEmployeeThrowsException() throws EmployeeDeleteException {
+    @Test(expected = Exception.class)
+    public void testDeleteEmployeeThrowsException() throws Exception {
+    	// prepare ID to delete
+        Employee john = new Employee("John Lennon", "Singing");
+        employeeDao.insert(john);
+        long id = john.getId();
+        
+        Manager lenna = new Manager("Lenna Strike");
+        managerDao.insert(lenna);
+        
+        Task singTask = new Task("Sing at 3:30 AM", lenna, john);
+        taskDao.insert(singTask);
+        
+        // mock DAO for this call
+        //EmployeeDao mockedDao = mock(EmployeeDao.class);
+        //when(mockedDao.removeEmployee(john)).thenReturn(false);
+        
+        //EmployeeDao originalDao = controller.getEmployeeDao();
+        try {
+            // delete & expect exception
+            //controller.setEmployeeDao(mockedDao);
+            controller.deleteEmployee(id);
+        } finally {
+            //controller.setEmployeeDao(originalDao);
+        }
+    }
+    
+    @Test(expected = EmployeeDeleteException.class)
+    public void testDeleteEmployeeThrowsException2() throws EmployeeDeleteException {
     	// prepare ID to delete
         Employee john = new Employee("John Lennon", "Singing");
         employeeDao.insert(john);
@@ -84,7 +120,7 @@ public class EmployeeControllerTest extends DomainAwareBase{
         // mock DAO for this call
         EmployeeDao mockedDao = mock(EmployeeDao.class);
         when(mockedDao.removeEmployee(john)).thenReturn(false);
-        
+
         EmployeeDao originalDao = controller.getEmployeeDao();
         try {
             // delete & expect exception
@@ -93,7 +129,7 @@ public class EmployeeControllerTest extends DomainAwareBase{
         } finally {
             controller.setEmployeeDao(originalDao);
         }
-    }*/
+    }
     
     @Test
     public void testHandleDeleteException() {
@@ -143,4 +179,5 @@ public class EmployeeControllerTest extends DomainAwareBase{
         // employee is stored in DB
         assertEquals(paul, employeeDao.find(paul.getId()));
     }
+    
 }

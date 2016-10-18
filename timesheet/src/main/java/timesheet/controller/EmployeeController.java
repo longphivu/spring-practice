@@ -18,11 +18,19 @@ import timesheet.domain.Employee;
  */
 @Controller
 @RequestMapping("/employees")
-public class EmployeeController {
+public class EmployeeController extends AbstractController {
 
 	@Autowired
 	EmployeeDao employeeDao;
 	
+	public EmployeeDao getEmployeeDao() {
+		return employeeDao;
+	}
+
+	public void setEmployeeDao(EmployeeDao employeeDao) {
+		this.employeeDao = employeeDao;
+	}
+
 	/**
      * Retrieves employees, puts them in the model and returns corresponding view
      * @param model Model to put employees to
@@ -115,10 +123,4 @@ public class EmployeeController {
 	    return new ModelAndView("employees/delete-error", model);
 	}
 	
-	@ExceptionHandler(Exception.class)
-	public ModelAndView handleException(Exception e) {
-	    ModelMap model = new ModelMap();
-	    model.addAttribute("track", e.getMessage());
-	    return new ModelAndView("error", model);
-	}
 }
