@@ -13,7 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 import timesheet.controller.exception.EmployeeDeleteException;
 import timesheet.dao.EmployeeDao;
 import timesheet.domain.Employee;
-
+/**
+ * Controller for handling Employees.
+ */
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -21,32 +23,59 @@ public class EmployeeController {
 	@Autowired
 	EmployeeDao employeeDao;
 	
+	/**
+     * Retrieves employees, puts them in the model and returns corresponding view
+     * @param model Model to put employees to
+     * @return employees/list
+     */
 	@RequestMapping(method = RequestMethod.GET)
 	public String listEmployees(Model model) {
 		model.addAttribute("employees", employeeDao.list());
 		return "employees/list";
 	}
 	
+	/**
+     * Returns employee with specified ID
+     * @param id Employee's ID
+     * @param model Model to put employee to
+     * @return employees/view
+     */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String getEmployee(Model model, @PathVariable("id") long id) {
 		model.addAttribute("employee", employeeDao.find(id));
 		return "employees/view";
 	}
 	
+	/**
+     * Updates employee with specified ID
+     * @param id Employee's ID
+     * @param employee Employee to update (bounded from HTML form)
+     * @return redirects to employees
+     */
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
 	public String updateEmployee(Model model, @PathVariable("id") long id, Employee employee) {
+		employee.setId(id);
 		employeeDao.update(employee);
 		model.addAttribute("employee", employee);
 		return "employees/view";
 	}
 	
-	@RequestMapping(value = "/add", method = RequestMethod.PUT)
-	public String addEmployee(Model model, Employee employee) {
+	/**
+     * Saves new employee to the database
+     * @param employee Employee to save
+     * @return redirects to employees
+     */
+	@RequestMapping(method = RequestMethod.POST)
+	public String addEmployee(Employee employee) {
 		employeeDao.insert(employee);
-		model.addAttribute("employee", employee);
 		return "redirect:/employees";
 	}
 	
+	/**
+     * Creates form for new employee
+     * @param model Model to bind to HTML form
+     * @return employees/new
+     */
 	@RequestMapping(params = "new", method = RequestMethod.GET)
 	public String createEmployeeForm(Model model) {
 	    model.addAttribute("employee", new Employee());
@@ -84,5 +113,12 @@ public class EmployeeController {
 	    ModelMap model = new ModelMap();
 	    model.put("employee", e.getEmployee());
 	    return new ModelAndView("employees/delete-error", model);
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ModelAndView handleException(Exception e) {
+	    ModelMap model = new ModelMap();
+	    model.addAttribute("track", e.getMessage());
+	    return new ModelAndView("error", model);
 	}
 }

@@ -18,26 +18,29 @@
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  
   <servlet-mapping>
     <servlet-name>timesheet</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
   
+  <!-- default servlet to handle static resources -->
   <servlet-mapping>
     <servlet-name>default</servlet-name>
     <url-pattern>/resources/*</url-pattern>
   </servlet-mapping>
   
-    <filter>
-	    <filter-name>httpMethodFilter</filter-name>
-	    <filter-class>
-	        org.springframework.web.filter.HiddenHttpMethodFilter
-	    </filter-class>
-	</filter>
+  <!-- To stay Web 1.0 friendly -->
+  <filter>
+    <filter-name>httpMethodFilter</filter-name>
+    <filter-class>
+        org.springframework.web.filter.HiddenHttpMethodFilter
+    </filter-class>
+  </filter>
 	 
-	<filter-mapping>
-	    <filter-name>httpMethodFilter</filter-name>
-	    <url-pattern>/*</url-pattern>
-	</filter-mapping>
+  <filter-mapping>
+	 <filter-name>httpMethodFilter</filter-name>
+	 <url-pattern>/*</url-pattern>
+  </filter-mapping>
 	
 </web-app>

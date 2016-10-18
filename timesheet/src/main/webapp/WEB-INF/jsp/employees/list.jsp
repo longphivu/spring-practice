@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -8,7 +9,7 @@
 <head>
     <title>Employees</title>
     <!-- :TODO : should we include the application context? -->
-    <link rel="stylesheet" href="/resources/style.css" type="text/css">
+    <link rel="stylesheet" href="/timesheet/resources/style.css" type="text/css">
 </head>
 <body>
     <h1>List of employees</h1>
