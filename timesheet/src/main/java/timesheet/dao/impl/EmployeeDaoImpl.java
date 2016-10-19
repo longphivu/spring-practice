@@ -1,5 +1,7 @@
 package timesheet.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +28,13 @@ public class EmployeeDaoImpl extends HibernateDao<Employee, Long> implements Emp
 		
 		delete(employee);
 		return true;
+	}
+	
+	@Override
+	public List<Employee> getUnassigedEmployee() {
+		Query employeeTimesheetQuery = currentSession().createQuery("from Employee e where e.id not in elements()");
+		
+		return employeeTimesheetQuery.list();
 	}
 
 }

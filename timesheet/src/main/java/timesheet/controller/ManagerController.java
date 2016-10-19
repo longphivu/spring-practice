@@ -76,6 +76,20 @@ public class ManagerController extends AbstractController {
     }
     
     /**
+     * Returns redirect to list of managers after insertion
+     * @param model Model to put manager to
+     * @return inserts manager and returns redirect:/managers
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public String updateManager(Model model, @PathVariable("id") long id, Manager manager) {
+    	manager.setId(id);
+    	managerDao.update(manager);
+    	model.addAttribute("manager", manager);
+    	return "/managers/view";
+    }
+    
+    
+    /**
      * Returns redirect to list of managers after deletion
      * @param id Managers's ID
      * @return deletes manager and returns redirect:/managers

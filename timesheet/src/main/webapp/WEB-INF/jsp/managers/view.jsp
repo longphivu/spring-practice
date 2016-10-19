@@ -24,7 +24,7 @@
 	<br />
 	<a href="../managers">Go Back</a>
 
-	<script src="/timesheet/resources/jquery-min.js"></script>
+	<script src="/timesheet/resources/jquery.min.js"></script>
 	<script>
 		(function() {
 			$("#unlock").on("click", function() {
