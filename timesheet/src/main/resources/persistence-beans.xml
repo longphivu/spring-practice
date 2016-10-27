@@ -13,7 +13,7 @@
 		http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd">
 
     <!-- Enable annotation -->
-	<context:annotation-config />
+	<!-- <context:annotation-config /> -->
 	
 	<!-- package to look for annotated classed -->
     <context:component-scan base-package="timesheet.dao.impl, timesheet.service.impl"/>
@@ -65,5 +65,7 @@
 	<jdbc:embedded-database id="database" type="HSQL">
 	</jdbc:embedded-database>
 
-	
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver" >
+        <property name="defaultErrorView" value="managers/delete-error"/>
+    </bean>
 </beans>

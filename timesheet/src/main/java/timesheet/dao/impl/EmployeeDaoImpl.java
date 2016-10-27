@@ -1,5 +1,6 @@
 package timesheet.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -30,11 +31,4 @@ public class EmployeeDaoImpl extends HibernateDao<Employee, Long> implements Emp
 		return true;
 	}
 	
-	@Override
-	public List<Employee> getUnassigedEmployee() {
-		Query employeeTimesheetQuery = currentSession().createQuery("from Employee e where e.id not in elements()");
-		
-		return employeeTimesheetQuery.list();
-	}
-
 }

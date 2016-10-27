@@ -6,6 +6,7 @@
     <param-value>
             classpath:persistence-beans.xml
             classpath:controllers.xml
+            classpath:aop.xml
         </param-value>
   </context-param>
   

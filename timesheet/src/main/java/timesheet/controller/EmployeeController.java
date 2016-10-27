@@ -1,5 +1,7 @@
 package timesheet.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import timesheet.controller.exception.EmployeeDeleteException;
@@ -21,7 +24,7 @@ import timesheet.domain.Employee;
 public class EmployeeController extends AbstractController {
 
 	@Autowired
-	EmployeeDao employeeDao;
+	private EmployeeDao employeeDao;
 	
 	public EmployeeDao getEmployeeDao() {
 		return employeeDao;
@@ -111,6 +114,20 @@ public class EmployeeController extends AbstractController {
 	    return "redirect:/employees";
 	}
 	
+	@RequestMapping(value = "/employeesRest", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public Employee getAllEmployees()
+    {
+        List<Employee> employees = employeeDao.list();
+        return employees.get(0);
+    }
+	
+	@RequestMapping(value = "/error", method = RequestMethod.GET)
+	public void getError() throws EmployeeDeleteException
+    {
+        throw new EmployeeDeleteException(new Employee());
+    }
+	
 	/**
 	 * Handles EmployeeDeleteException
 	 * @param e Thrown exception with employee that couldn't be deleted
@@ -122,5 +139,6 @@ public class EmployeeController extends AbstractController {
 	    model.put("employee", e.getEmployee());
 	    return new ModelAndView("employees/delete-error", model);
 	}
+	
 	
 }

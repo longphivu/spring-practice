@@ -14,7 +14,7 @@ import timesheet.dao.GenericDao;
 
 @Transactional(propagation= Propagation.REQUIRED, readOnly=false)
 public class HibernateDao<E, K extends Serializable> implements GenericDao<E, K> {
-
+	@Autowired
 	private SessionFactory sessionFactory;
     protected Class<? extends E> daoType;
 	
@@ -29,7 +29,7 @@ public class HibernateDao<E, K extends Serializable> implements GenericDao<E, K>
 	// use field injection, we cannot set other dependencies for private fields.
 	// And if we use constructor injection, every other subclass
 	// would have to have constructor matching the one from super class
-    @Autowired
+    
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
